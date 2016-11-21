@@ -53,11 +53,6 @@ void ParseCommandLine(int argc, char** argv)
 } // end namespace
 //*/
 
-#include <experimental/filesystem> // C++-standard header file name  
-#ifdef _WIN32
-#include <filesystem> // Microsoft-specific implementation header file name  
-#endif
-
 #include "stb.h"
 #include "safedelete.hpp"
 #include "flatfilesystem.hpp"
