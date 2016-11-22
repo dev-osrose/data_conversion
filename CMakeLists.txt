@@ -21,7 +21,6 @@ SET( HEADERS
     include/flatfile.hpp
     include/flatfilesystem.hpp 
     include/safedelete.hpp
-    include/scopedpointer.hpp 
     include/stb.h )
 
 SET( SOURCES

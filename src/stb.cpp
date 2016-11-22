@@ -3,7 +3,6 @@
 #include "stb.h"
 #include "filesystem.hpp"
 #include "safedelete.hpp"
-#include "scopedpointer.hpp"
 
 
 namespace ROSE {
@@ -18,7 +17,7 @@ namespace ROSE {
 	}
 
 	bool STB::Load(const char* path){
-		ScopedPointer<File> fh(FILE_SYS()->OpenFile(path, "rb"));
+		std::unique_ptr<File> fh(FILE_SYS()->OpenFile(path, "rb"));
 		if(!fh) return false;
 
 		char VersionHeader[3];
