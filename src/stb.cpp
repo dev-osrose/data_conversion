@@ -24,7 +24,7 @@ namespace ROSE {
 		char VersionHeader[3];
 		fh->ReadData(VersionHeader, 3);
 		if(strncmp(VersionHeader, "STB", 3)){
-			LOG("Error: '%s' invalid version '%s'\n", path, VersionHeader);
+			LOG("Error: '{}' invalid version '{}'\n", path, VersionHeader);
 			fh->Close();
 			return false;
 		}

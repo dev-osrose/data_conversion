@@ -6,7 +6,8 @@ typedef char TCHAR;
 #endif
 
 #ifndef LOG
-#define LOG printf
+#include "logconsole.h"
+#define LOG CLog::GetLogger(log_type::GENERAL).lock()->info
 #endif
 
 #include <string>

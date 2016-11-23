@@ -1,25 +1,31 @@
-#ifndef FLAT_FILE_SYSTEM_H
-#define FLAT_FILE_SYSTEM_H
+#ifndef BUFFERED_FILE_SYSTEM_H
+#define BUFFERED_FILE_SYSTEM_H
 
 #include "filesystem.hpp"
-#include "flatfile.hpp"
+#include "bufferedfile.hpp"
 
-class FlatFileSystem : public FileSystem {
+class BufferedFileSystem : public FileSystem {
 public:
-	FlatFileSystem(){}
-	FlatFileSystem(const char* baseDir){
+	BufferedFileSystem(){}
+	BufferedFileSystem(const char* baseDir){
 		SetBaseDirectory(baseDir);
 	}
 
-	virtual ~FlatFileSystem(){}
+	virtual ~BufferedFileSystem(){}
 
 	virtual File* OpenFile(const char* path, const char* mode, bool dataFile = true, bool showError = true){
+		std::string modeStr = mode;
+		if(modeStr.find("w") != std::string::npos){
+			if(showError) LOG("Error: BufferedFileSystem does not support file writing! ('{}' [{}])", path, mode);
+			return NULL;
+		}
+
 		std::string realpath = path;
 		if(dataFile) GetFullPath(realpath);
 
-		FlatFile* file = new FlatFile();
+		BufferedFile* file = new BufferedFile();
 		if(!file->Open(realpath.c_str(), mode)){
-			if(showError) LOG("Error: FlatFileSystem could not open file: '{}' [{}]", path, mode);
+			if(showError) LOG("Error: BufferedFileSystem could not open file: '{}' [{}]", path, mode);
 			delete file;
 			return NULL;
 		}
@@ -48,11 +54,11 @@ public:
 
 	void SetBaseDirectory(const char* dir){
 		mBaseDirectory = dir;
-		//mBaseDirectory.replace("\"", "");
-		//mBaseDirectory.replace("/", "\\");
-		//char end = mBaseDirectory.at(mBaseDirectory.length() - 1);
+		//mBaseDirectory.ReplaceAll("\"", "");
+		//mBaseDirectory.ReplaceAll("/", "\\");
+		//char end = mBaseDirectory.At(mBaseDirectory.Length() - 1);
 		//if(end != '\\') mBaseDirectory += "\\";
-		LOG("FlatFileSystem Base Directory: '{}'", mBaseDirectory.c_str());
+		LOG("BufferedFileSystem Base Directory: '{}'", mBaseDirectory);
 	}
 
 	const char* GetBaseDirectory(){

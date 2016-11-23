@@ -11,10 +11,8 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 /*
 #include <cxxopts.hpp>
-#include <spdlog/spdlog.h>
 
 namespace {
 void ParseCommandLine(int argc, char** argv)
@@ -52,36 +50,51 @@ void ParseCommandLine(int argc, char** argv)
 }
 } // end namespace
 //*/
-
 #include "stb.h"
+#include "stl.h"
 #include "safedelete.hpp"
-#include "flatfilesystem.hpp"
+#include "bufferedfilesystem.hpp"
 
 int main(int argc, char* argv[]) {
-//  try {
-//    size_t q_size = 4096; //queue size must be power of 2
-//    spdlog::set_async_mode(q_size);
-//    auto console = spdlog::stdout_color_mt("console");
+  try {
+    size_t q_size = 4096; //queue size must be power of 2
+    spdlog::set_async_mode(q_size);
+    auto console = CLog::GetLogger(log_type::GENERAL);
 //    ParseCommandLine(argc, argv);
     
     // LOAD STUFF HERE!!!
     std::string path = "./";
-    FlatFileSystem* fs = new FlatFileSystem(path.c_str());
+    BufferedFileSystem* fs = new BufferedFileSystem(path.c_str());
     FileSystem::SetFileSystem(fs);
     
+    LOG("loading stb");
     ROSE::STB* item = new ROSE::STB("list_weapon.stb");
     
-    LOG("Loaded %i Rows with %i Columns.\n",
-    item->Rows(),
-    item->Columns());
+    LOG("loading stl");
+    ROSE::STL* item_string = new ROSE::STL("list_weapon_s.stl");
     
+    
+    LOG("Loaded {} Rows with {} Columns.",
+      item->Rows(),
+      item->Columns());
+      
+    for(int i = 1; i < item->Rows(); ++i) {
+      int id = item_string->GetIDByStr( item->GetString(i, item->Columns()-1) );
+      if(id != -1) {
+        LOG("({}) {} - {}", i,
+          item_string->GetText( id ), 
+          item_string->GetComment( id ));
+      }
+    }
+    
+    SAFE_DELETE(item_string);
     SAFE_DELETE(item);
     SAFE_DELETE(fs);
 
-//    spdlog::drop_all();
-//  }
-//  catch (const spdlog::spdlog_ex& ex) {
-//     std::cout << "Log failed: " << ex.what() << std::endl;
-//  }
+    spdlog::drop_all();
+  }
+  catch (const spdlog::spdlog_ex& ex) {
+     std::cout << "Log failed: " << ex.what() << std::endl;
+  }
   return 0;
 }
