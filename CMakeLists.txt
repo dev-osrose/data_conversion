@@ -40,14 +40,16 @@ SET( HEADERS
     include/safedelete.hpp
     include/scopedpointer.hpp 
     include/stb.h
-    include/stl.h)
+    include/stl.h
+    include/stbconverter.h)
 
 SET( SOURCES
     src/main.cpp
     src/logconsole.cpp
     src/filesystem.cpp
     src/stb.cpp
-    src/stl.cpp )
+    src/stl.cpp
+    src/stbconverter.cpp )
     
 find_package( Threads REQUIRED )
 add_executable(${PROJECT} ${SOURCES} ${HEADERS})

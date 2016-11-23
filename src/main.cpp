@@ -50,10 +50,9 @@ void ParseCommandLine(int argc, char** argv)
 }
 } // end namespace
 //*/
-#include "stb.h"
-#include "stl.h"
 #include "safedelete.hpp"
 #include "bufferedfilesystem.hpp"
+#include "stbconverter.h"
 
 int main(int argc, char* argv[]) {
   try {
@@ -67,28 +66,12 @@ int main(int argc, char* argv[]) {
     BufferedFileSystem* fs = new BufferedFileSystem(path.c_str());
     FileSystem::SetFileSystem(fs);
     
-    LOG("loading stb");
-    ROSE::STB* item = new ROSE::STB("list_weapon.stb");
+    std::thread worker([](){
+      ROSE::StbConverter convert;
+      convert.Start();
+    });
     
-    LOG("loading stl");
-    ROSE::STL* item_string = new ROSE::STL("list_weapon_s.stl");
-    
-    
-    LOG("Loaded {} Rows with {} Columns.",
-      item->Rows(),
-      item->Columns());
-      
-    for(int i = 1; i < item->Rows(); ++i) {
-      int id = item_string->GetIDByStr( item->GetString(i, item->Columns()-1) );
-      if(id != -1) {
-        LOG("({}) {} - {}", i,
-          item_string->GetText( id ), 
-          item_string->GetComment( id ));
-      }
-    }
-    
-    SAFE_DELETE(item_string);
-    SAFE_DELETE(item);
+    worker.join();
     SAFE_DELETE(fs);
 
     spdlog::drop_all();

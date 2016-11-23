@@ -71,6 +71,10 @@ namespace ROSE {
 	int STB::GetInt(int row, int column) const {
 		return atoi(GetString(row, column));
 	}
+	
+	float STB::GetFloat(int row, int column) const {
+		return atof(GetString(row, column));
+	}
 
 	unsigned int STB::Rows() const {
 		return mRowCount;

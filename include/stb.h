@@ -11,6 +11,7 @@ namespace ROSE {
 		bool Load(const char* path);
 
 		int GetInt(int row, int column) const; 
+		float GetFloat(int row, int column) const; 
 		const char* GetString(int row, int column) const;
 
 		unsigned int Rows() const;
