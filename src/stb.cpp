@@ -72,7 +72,7 @@ namespace ROSE {
 		return atoi(GetString(row, column));
 	}
 	
-	float STB::GetFloat(int row, int column) const {
+	double STB::GetDouble(int row, int column) const {
 		return atof(GetString(row, column));
 	}
 

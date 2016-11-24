@@ -79,5 +79,9 @@ int main(int argc, char* argv[]) {
   catch (const spdlog::spdlog_ex& ex) {
      std::cout << "Log failed: " << ex.what() << std::endl;
   }
+
+#ifdef _WIN32
+  system("pause");
+#endif
   return 0;
 }
