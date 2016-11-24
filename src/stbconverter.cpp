@@ -170,9 +170,6 @@ namespace ROSE {
           //TODO Update these lua functions to have default behavor
           out.write("\n\
 function OnInit()\n\
-  for i, data in ipairs(reqTable) do\n\
-    print(data.type .. \": \" ..data.value)\n\
-  end\n\
 end\n\
 \n\
 function OnCreate()\n\
@@ -183,16 +180,15 @@ end\n\
 \n\
 function OnEquip()\n\
   for i, data in ipairs(reqTable) do\n\
-    print(data.type .. \": \" ..data.value)\n\
     if data.value > GetCurrentAttr(data.type) then\n\
       return false\n\
     end\n\
   end\n\
 \n\
   for i, data in ipairs(bonusTable) do\n\
-    print(data.type .. \": \" ..data.value)\n\
     AddBonusAttr(data.type, data.value)\n\
   end\n\
+  return true\n\
 end\n\
 \n\
 function OnUnequip()\n\
