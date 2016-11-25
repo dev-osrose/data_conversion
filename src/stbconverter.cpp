@@ -80,18 +80,11 @@ namespace ROSE {
           double price_sell = 0.0f;
           unsigned int subtype, price_buy, weight, attack, defense, range, slots, equip_jobs, equip_genders, equip_level, refinable, view_model;
           subtype = price_buy = weight = attack = defense = range = slots = equip_jobs = equip_genders = equip_level = refinable = view_model = 0;
-          unsigned int attack_speed, magic, move_speed;
-          attack_speed = magic = move_speed = 0;
+          unsigned int attack_speed, magic, move_speed, usage_restrictions;
+          attack_speed = magic = move_speed = usage_restrictions = 0;
           std::string script = "";
           
-          
-          // use restriction == col 3
-          //#define ITEM_NO_RESTRICTION				0x00
-          //#define ITEM_DONT_SELL					0x01
-          //#define ITEM_DONT_DROP_EXCHANGE			0x02
-          //#define ITEM_DONT_SELL_DROP_EXCHANGE	0x03
-          //#define	ITEM_ENABLE_KEEPING				0x04
-          
+          usage_restrictions = itemTbl->GetInt(i, 3);
           subtype = itemTbl->GetInt(i, 4);
           price_buy = itemTbl->GetInt(i, 5);
           price_sell = itemTbl->GetDouble(i, 6); // This might actually be a float or double
@@ -141,6 +134,12 @@ namespace ROSE {
           out.write(" --]]\n\n");
 #endif
 
+          //#define ITEM_NO_RESTRICTION				0x00
+          //#define ITEM_DONT_SELL					0x01
+          //#define ITEM_DONT_DROP_EXCHANGE			0x02
+          //#define ITEM_DONT_SELL_DROP_EXCHANGE	0x03
+          //#define	ITEM_ENABLE_KEEPING				0x04
+          out.write("use_restriction = {}\n", usage_restrictions);
           // write out the requirement stat table
           out.write("reqTable = {}\n", "{}");
           for (int reqCount = 0; reqCount < 2; ++reqCount) {
@@ -154,7 +153,7 @@ namespace ROSE {
           }
           out.write("\n\n");
 
-          // write out the requirement stat table
+          // write out the bonus stat table
           out.write("bonusTable = {}\n", "{}");
           for (int bonusCount = 0; bonusCount < 2; ++bonusCount) {
             std::string type = itemTbl->GetString(i, 24 + (bonusCount * 3));
