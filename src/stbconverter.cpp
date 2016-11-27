@@ -222,13 +222,24 @@ end");
               pos = str.find(token.c_str(), pos + 2);
             }
           };
+
+          auto cleanString = [](std::string& str) {
+            for (int i = 0; i < str.size(); ++i) {
+              if (str[i] != '\n' && (str[i] < ' ' || str[i] > '~')) {
+                str.erase(i, 1);
+                i = 0;
+              }
+            }
+          };
           
           replaceString(name, "\"");
           replaceString(desc, "\"");
           replaceString(script, "\'");
 
           // TODO replace unicode characters
-          replaceString(desc, "…", "."); // This doesn't seem to work D: (Conjurer's Wand in the weapon stb has this character in it)
+          cleanString(name);
+          cleanString(desc);
+          cleanString(script);
 
           outSql.write("INSERT into item_db(id, name, `desc`, type, subtype, price_buy, price_sell, weight, attack, defense, `range`, slots, equip_jobs, equip_genders, equip_level, refinable, view_id, script) \
             values({0}, \"{1}\", \"{2}\", {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}, {13}, {14}, {15}, {16}, '{17}');\n",
