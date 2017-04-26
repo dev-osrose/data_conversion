@@ -78,8 +78,8 @@ namespace ROSE {
           if (desc.empty()) continue;
           
           double price_sell = 0.0f;
-          unsigned int subtype, price_buy, weight, attack, defense, range, slots, equip_jobs, equip_genders, equip_level, refinable, view_model;
-          subtype = price_buy = weight = attack = defense = range = slots = equip_jobs = equip_genders = equip_level = refinable = view_model = 0;
+          unsigned int subtype, price_buy, weight, attack, defense, range, slots, equip_jobs, ground_view_model;
+          subtype = price_buy = weight = attack = defense = range = slots = equip_jobs = ground_view_model = 0;
           unsigned int attack_speed, magic, move_speed, usage_restrictions;
           attack_speed = magic = move_speed = usage_restrictions = 0;
           std::string script = "";
@@ -91,7 +91,7 @@ namespace ROSE {
           weight = itemTbl->GetInt(i, 7);
           //quality
           // icon ID
-          view_model = itemTbl->GetInt(i, 10);
+          ground_view_model = itemTbl->GetInt(i, 10);
           equip_jobs = itemTbl->GetInt(i, 16);
           // col 17 and 18 == required union id for equipping
           defense = itemTbl->GetInt(i, 31);
@@ -241,7 +241,7 @@ end");
           cleanString(desc);
           cleanString(script);
 
-          outSql.write("INSERT into item_db(id, name, `desc`, type, subtype, price_buy, price_sell, weight, attack, defense, `range`, slots, equip_jobs, equip_genders, equip_level, refinable, view_id, script) \
+          outSql.write("INSERT into item_db(id, name, `desc`, type, subtype, price_buy, price_sell, weight, attack, defense, `range`, slots, equip_jobs, view_id, script) \
             values({0}, \"{1}\", \"{2}\", {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}, {13}, {14}, {15}, {16}, '{17}');\n",
             i,
             name,
@@ -256,10 +256,7 @@ end");
             range,
             slots,
             equip_jobs,
-            equip_genders,
-            equip_level,
-            refinable, 
-            view_model,//view_id == model ID on client side
+            ground_view_model,//view_id == model ID on client side
             script //== lua script with functions of OnCreate() OnRemove() OnEquipped() OnUnequip() OnDrop() OnPickup() OnUse()
             );
         }
