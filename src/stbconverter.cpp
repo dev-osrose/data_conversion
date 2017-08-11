@@ -241,7 +241,7 @@ end");
           cleanString(desc);
           cleanString(script);
 
-          outSql.write("INSERT into item_db(id, name, `desc`, type, subtype, price_buy, price_sell, weight, attack, defense, `range`, slots, equip_jobs, view_id, script) \
+          outSql.write("REPLACE into item_db(id, name, `desc`, type, subtype, price_buy, price_sell, weight, attack, defense, `range`, slots, equip_jobs, view_id, script) \
             values({0}, \"{1}\", \"{2}\", {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}, {13}, {14}, {15}, {16}, '{17}');\n",
             i,
             name,
