@@ -2,7 +2,7 @@
 #define SAFE_DELETE_H
 
 #ifndef NULL
-# define NULL 0
+# define NULL nullptr
 #endif
 
 #define SAFE_DELETE(x) if(x){ delete x; x = NULL; }

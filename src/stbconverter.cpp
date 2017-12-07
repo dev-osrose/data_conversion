@@ -1,4 +1,4 @@
-﻿#include "file.hpp"
+#include "file.hpp"
 #include "stb.h"
 #include "stl.h"
 #include "stbconverter.h"
@@ -78,8 +78,8 @@ namespace ROSE {
           if (desc.empty()) continue;
           
           double price_sell = 0.0f;
-          unsigned int subtype, price_buy, weight, attack, defense, range, slots, equip_jobs, ground_view_model;
-          subtype = price_buy = weight = attack = defense = range = slots = equip_jobs = ground_view_model = 0;
+          unsigned int subtype, price_buy, weight, attack, defense, range, slots, equip_jobs, ground_view_model, durability;
+          subtype = price_buy = weight = attack = defense = range = slots = equip_jobs = ground_view_model = durability = 0;
           unsigned int attack_speed, magic, move_speed, usage_restrictions;
           attack_speed = magic = move_speed = usage_restrictions = 0;
           std::string script = "";
@@ -94,6 +94,7 @@ namespace ROSE {
           ground_view_model = itemTbl->GetInt(i, 10);
           equip_jobs = itemTbl->GetInt(i, 16);
           // col 17 and 18 == required union id for equipping
+          durability = itemTbl->GetInt(i, 29);
           defense = itemTbl->GetInt(i, 31);
           
           switch(type) {
