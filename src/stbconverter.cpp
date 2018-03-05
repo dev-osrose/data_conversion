@@ -175,35 +175,35 @@ end\n\
 function OnCreate()\n\
 end\n\
 \n\
-function OnRemove()\n\
+function OnDelete()\n\
 end\n\
 \n\
-function OnEquip()\n\
+function OnEquip(entity)\n\
   for i, data in ipairs(reqTable) do\n\
-    if data.value > GetCurrentAttr(data.type) then\n\
+    if data.value > getAttr(entity, data.type) then\n\
       return false\n\
     end\n\
   end\n\
 \n\
   for i, data in ipairs(bonusTable) do\n\
-    AddBonusAttr(data.type, data.value)\n\
+    addBonusAttr(entity, data.type, data.value)\n\
   end\n\
   return true\n\
 end\n\
 \n\
-function OnUnequip()\n\
+function OnUnequip(entity)\n\
   for i, data in ipairs(bonusTable) do\n\
-    RemoveBonusAttr(data.type, data.value)\n\
+    removeBonusAttr(entity, data.type, data.value)\n\
   end\n\
 end\n\
 \n\
-function OnDrop()\n\
+function OnDrop(entity)\n\
 end\n\
 \n\
-function OnPickup()\n\
+function OnPickup(entity)\n\
 end\n\
 \n\
-function OnUse()\n\
+function OnUse(entity)\n\
 end");
 
           script = out.c_str();
