@@ -170,12 +170,15 @@ namespace ROSE {
           //TODO Update these lua functions to have default behavor
           out.write("\n\
 function OnInit()\n\
+  return true\n\
 end\n\
 \n\
 function OnCreate()\n\
+  return true\n\
 end\n\
 \n\
 function OnDelete()\n\
+  return true\n\
 end\n\
 \n\
 function OnEquip(entity)\n\
@@ -195,15 +198,19 @@ function OnUnequip(entity)\n\
   for i, data in ipairs(bonusTable) do\n\
     removeBonusAttr(entity, data.type, data.value)\n\
   end\n\
+  return true\n\
 end\n\
 \n\
 function OnDrop(entity)\n\
+  return true\n\
 end\n\
 \n\
 function OnPickup(entity)\n\
+  return true\n\
 end\n\
 \n\
 function OnUse(entity)\n\
+  return true\n\
 end");
 
           script = out.c_str();
@@ -243,7 +250,7 @@ end");
           cleanString(script);
 
           outSql.write("REPLACE into item_db(id, name, `desc`, type, subtype, price_buy, price_sell, weight, attack, defense, `range`, slots, equip_jobs, view_id, script) \
-            values({0}, \"{1}\", \"{2}\", {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}, {13}, {14}, {15}, {16}, '{17}');\n",
+            values({0}, \"{1}\", \"{2}\", {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}, {13}, '{14}');\n",
             i,
             name,
             desc,
