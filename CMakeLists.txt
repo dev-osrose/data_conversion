@@ -9,7 +9,7 @@ SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-use_cxx14()
+use_cxx17()
 
 #Build 3rdparty dependencies if needed
 #ADD_SUBDIRECTORY(3rdparty)
@@ -41,6 +41,7 @@ SET( HEADERS
     include/scopedpointer.hpp 
     include/stb.h
     include/stl.h
+    include/ifo.h
     include/stbconverter.h)
 
 SET( SOURCES
@@ -49,6 +50,7 @@ SET( SOURCES
     src/filesystem.cpp
     src/stb.cpp
     src/stl.cpp
+    src/ifo.cpp
     src/stbconverter.cpp )
     
 find_package( Threads REQUIRED )
